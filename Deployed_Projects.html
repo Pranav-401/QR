@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pranav Maurya - Deployed Projects</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0a0a0a;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Animated background */
+      .bg-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: radial-gradient(
+            circle at 20% 80%,
+            #ff6b35 0%,
+            transparent 50%
+          ),
+          radial-gradient(circle at 80% 20%, #667eea 0%, transparent 50%),
+          radial-gradient(circle at 40% 40%, #764ba2 0%, transparent 50%);
+        animation: gradientShift 8s ease-in-out infinite;
+      }
+
+      @keyframes gradientShift {
+        0%,
+        100% {
+          transform: scale(1) rotate(0deg);
+        }
+        50% {
+          transform: scale(1.1) rotate(5deg);
+        }
+      }
+
+      .floating-shapes {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .shape {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .shape:nth-child(1) {
+        width: 80px;
+        height: 80px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+      }
+
+      .shape:nth-child(2) {
+        width: 120px;
+        height: 120px;
+        top: 60%;
+        right: 10%;
+        animation-delay: 2s;
+      }
+
+      .shape:nth-child(3) {
+        width: 100px;
+        height: 100px;
+        bottom: 20%;
+        left: 20%;
+        animation-delay: 4s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+        }
+      }
+
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 12px 16px;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+        color: white;
+      }
+
+      .back-button svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.3s ease;
+      }
+
+      .back-button:hover svg {
+        transform: translateX(-4px);
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        position: relative;
+      }
+
+      .projects-card {
+        background: rgba(20, 20, 20, 0.8);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 48px 40px;
+        width: 100%;
+        max-width: 900px;
+        text-align: center;
+        box-shadow: 0 32px 64px rgba(0, 0, 0, 0.4);
+        position: relative;
+        overflow: hidden;
+        animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .projects-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+      }
+
+      .name {
+        font-size: 36px;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 32px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(1fr, 1fr));
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .project-row {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .project-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 24px;
+        text-align: left;
+        color: white;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        transform: translateY(20px);
+        opacity: 0;
+        animation: fadeIn 0.6s ease forwards;
+      }
+
+      .project-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+        transition: left 0.8s;
+      }
+
+      .project-card:hover::before {
+        left: 100%;
+      }
+
+      .project-card:hover {
+        transform: translateY(-4px);
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+      }
+
+      .project-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: white;
+        flex: 1;
+      }
+
+      .project-tech {
+        background: rgba(102, 126, 234, 0.2);
+        color: #667eea;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .project-description {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 16px;
+        line-height: 1.5;
+      }
+
+      .project-links {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .project-link {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        font-size: 13px;
+      }
+
+      .project-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+      }
+
+      .project-link.github {
+        background: linear-gradient(135deg, #333, #555);
+      }
+
+      .project-link.github:hover {
+        box-shadow: 0 8px 16px rgba(51, 51, 51, 0.4);
+      }
+
+      .project-link.demo {
+        background: linear-gradient(135deg, #00c4b4, #00e6d1);
+      }
+
+      .project-link.demo:hover {
+        box-shadow: 0 8px 16px rgba(0, 196, 180, 0.4);
+      }
+
+      .project-link.linkedin {
+        background: linear-gradient(135deg, #0077b5, #005582);
+      }
+
+      .project-link.linkedin:hover {
+        box-shadow: 0 8px 16px rgba(0, 119, 181, 0.4);
+      }
+
+      @media (max-width: 768px) {
+        .projects-card {
+          padding: 32px 24px;
+          margin: 16px;
+          border-radius: 20px;
+        }
+
+        .name {
+          font-size: 28px;
+        }
+
+        .projects-grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .project-links {
+          flex-direction: column;
+        }
+
+        .project-link {
+          width: 100%;
+          text-align: center;
+        }
+
+        .back-button {
+          top: 15px;
+          left: 15px;
+          padding: 10px 14px;
+          font-size: 13px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .project-card {
+          padding: 20px;
+        }
+
+        .project-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+        }
+
+        .back-button {
+          top: 10px;
+          left: 10px;
+          padding: 8px 12px;
+        }
+      }
+
+      /* Animations */
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .project-card:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+      .project-card:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+      .project-card:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+      .project-card:nth-child(4) {
+        animation-delay: 0.8s;
+      }
+
+      @keyframes clickRipple {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+      .project-features ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+      }
+
+      .project-features li {
+        position: relative;
+        padding-left: 24px;
+        margin-bottom: 8px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .project-features li:before {
+        content: "✔";
+        position: absolute;
+        left: 0;
+        color: #00c4b4;
+        font-weight: bold;
+      }
+
+      .project-features ul ul {
+        margin-top: 8px;
+        margin-left: 20px;
+        padding-left: 0;
+      }
+
+      .project-features ul ul li {
+        padding-left: 16px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .project-features ul ul li:before {
+        content: "➤";
+        color: #667eea;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Back Button -->
+    <a href="index.html" class="back-button" title="Go Back to Home">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+      </svg>
+      Back to Home
+    </a>
+
+    <div class="bg-animation"></div>
+
+    <div class="floating-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+
+    <div class="container">
+      <div class="projects-card">
+        <h1 class="name">Deployed Projects</h1>
+
+        <div class="projects-grid">
+          <div class="project-row">
+            <!-- project DiceGame-->
+            <div class="project-card">
+              <div class="project-header">
+                <div class="project-title">DiceGame</div>
+                <span class="project-tech">React.js</span>
+              </div>
+              <div class="project-description">
+                <ul>
+                  <li>
+                    Real-Time Dice Roll Simulation – Experience realistic dice
+                    rolls with smooth animations.
+                  </li>
+                  <li>
+                    Responsive Design – Optimized for both desktop and mobile
+                    devices.
+                  </li>
+                  <li>
+                    Fast Refresh – Leveraging Vite's Hot Module Replacement for
+                    quick development iterations.
+                  </li>
+                  <li>
+                    Clean Codebase – Structured with ESLint configurations to
+                    maintain code quality.
+                  </li>
+                </ul>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://github.com/Pranav-401/DiceGame.git"
+                  class="project-link github"
+                  target="_blank"
+                  >GitHub</a
+                >
+                <a
+                  href="https://dice-game-neon-phi.vercel.app/"
+                  class="project-link demo"
+                  target="_blank"
+                  >Live Demo</a
+                >
+              </div>
+            </div>
+            <!-- project Paisabuddy-->
+            <div class="project-card">
+              <div class="project-header">
+                <div class="project-title">Paisabuddy</div>
+                <span class="project-tech">Vite</span>
+              </div>
+              <div class="project-description">
+                <ul>
+                  <li>
+                    📘 Learning Modules – Easy-to-understand explanations about
+                    stocks, mutual funds, SIPs, do’s & don’ts, and financial
+                    tips.
+                  </li>
+                  <li>
+                    🎮 Game-Based Learning – Interactive challenges and fraud
+                    detection simulations.
+                  </li>
+                  <li>
+                    📈 Paper Trading – Practice trading in a risk-free
+                    environment.
+                  </li>
+                  <li>
+                    🔔 Fraud Challenges – Learn to identify scams with
+                    real-world examples.
+                  </li>
+                  <li>
+                    📊 Dashboard – Track progress with a clean, responsive UI.
+                  </li>
+                  <li>
+                    🔐 Authentication – Secure login & signup for personalized
+                    learning.
+                  </li>
+                </ul>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://github.com/Pranav-401/CodeCrafter_Internal-Round_44.git"
+                  class="project-link github"
+                  target="_blank"
+                  >GitHub</a
+                >
+                <a
+                  href="https://paisabuddy-gamma.vercel.app/"
+                  class="project-link demo"
+                  target="_blank"
+                  >Live Demo</a
+                >
+              </div>
+            </div>
+            <!-- project BharatDarshan -->
+            <div class="project-card">
+              <div class="project-header">
+                <div class="project-title">BharatDarshan</div>
+                <span class="project-tech">Vite</span>
+              </div>
+              <div class="project-description">
+                An interactive web application that showcases the rich cultural,
+                historical, and geographical diversity of India. Users can
+                explore states, landmarks, and tourist destinations through an
+                intuitive interface with images, descriptions, and maps, making
+                it a virtual journey across the country.
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://github.com/Pranav-401/BharatDarshan.git"
+                  class="project-link github"
+                  target="_blank"
+                  >GitHub</a
+                >
+                <a
+                  href="https://bharat-darshan-pi.vercel.app/"
+                  class="project-link demo"
+                  target="_blank"
+                  >Live Demo</a
+                >
+              </div>
+            </div>
+            <!-- project fingenis-->
+            <div class="project-card">
+              <div class="project-header">
+                <div class="project-title">finGenius</div>
+                <span class="project-tech">Next.js</span>
+              </div>
+              <div class="project-description">
+                <ul>
+                  <li>
+                    AI-driven real-time transaction reconciliation for
+                    error-free records
+                  </li>
+                  <li>Personalized budgeting & investment recommendations</li>
+                  <li>Seamless multi-platform banking integration</li>
+                  <li>Automated tax document generation and filing</li>
+                  <li>User-friendly AI dashboard with interactive charts</li>
+                </ul>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://github.com/Pranav-401/finGenius"
+                  class="project-link github"
+                  target="_blank"
+                  >GitHub</a
+                >
+                <a
+                  href="https://hackversehackthon.vercel.app/"
+                  class="project-link demo"
+                  target="_blank"
+                  >Live Demo</a
+                >
+                <a
+                  href="https://www.linkedin.com/posts/pranavmaurya-oo7_hackverse2025-nextjs-supabase-activity-7321176182157135872-XoFO?utm_source=share&utm_medium=member_desktop&rcm=ACoAADWioF8BxZwpvBUM1kkINl1vwiij6czBD6c"
+                  class="project-link linkedin"
+                  target="_blank"
+                  >LinkedIn Post</a
+                >
+              </div>
+            </div>
+            <!-- project  Frontend Animated Project -->
+            <div class="project-card">
+              <div class="project-header">
+                <div class="project-title">Frontend Animated Project</div>
+                <span class="project-tech">HTML , CSS , JS , GSAP </span>
+              </div>
+              <div class="project-description">
+                This project highlights a responsive web application featuring
+                advanced animations and smooth interactions using: Locomotive
+                Scroll: For enhanced scrolling effects. GSAP (GreenSock
+                Animation Platform): Delivering high-performance animations.
+                Shery.js: Adding unique and creative visual elements.
+                JavaScript​: Powering the dynamic and interactive features.
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://github.com/Pranav-401/Epic"
+                  class="project-link github"
+                  target="_blank"
+                  >GitHub</a
+                >
+                <a
+                  href="https://pranav-401.github.io/Epic/"
+                  class="project-link demo"
+                  target="_blank"
+                  >Live Demo</a
+                >
+                <a
+                  href="https://www.linkedin.com/posts/pranavmaurya-oo7_frontenddevelopment-animations-responsivedesign-activity-7271507858511286272-Yh1j?utm_source=share&utm_medium=member_desktop&rcm=ACoAADWioF8BxZwpvBUM1kkINl1vwiij6czBD6c"
+                  class="project-link linkedin"
+                  target="_blank"
+                  >LinkedIn Post</a
+                >
+              </div>
+            </div>
+            <!-- project tic tac toe -->
+            <div class="project-card">
+              <div class="project-header">
+                <div class="project-title">Tic Tac Toe Game</div>
+                <span class="project-tech">HTML , CSS , JS</span>
+              </div>
+              <div class="project-description">
+                A Tic Tac Toe game built using HTML, CSS, and JavaScript where
+                you can play against the computer. The computer uses an
+                algorithm to make the best possible moves, making it a
+                challenging and fun experience!
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://github.com/Pranav-401/Tic-Tac-Toe-Web-Application"
+                  class="project-link github"
+                  target="_blank"
+                  >GitHub</a
+                >
+                <a
+                  href="https://pranav-401.github.io/Tic-Tac-Toe-Web-Application/"
+                  class="project-link demo"
+                  target="_blank"
+                  >Live Demo</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const projectCards = document.querySelectorAll(".project-card");
+
+        projectCards.forEach((card) => {
+          card.addEventListener("mouseenter", function () {
+            this.style.transform = "translateY(-4px)";
+          });
+
+          card.addEventListener("mouseleave", function () {
+            this.style.transform = "translateY(0)";
+          });
+
+          // Ripple effect on link clicks
+          const links = this.querySelectorAll(".project-link");
+          links.forEach((link) => {
+            link.addEventListener("click", function (e) {
+              e.preventDefault();
+              // Add ripple effect
+              const ripple = document.createElement("div");
+              const rect = this.getBoundingClientRect();
+              const size = Math.max(rect.width, rect.height);
+
+              ripple.style.cssText = `
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.4);
+                pointer-events: none;
+                animation: clickRipple 0.6s ease-out;
+                transform: scale(0);
+                width: ${size * 0.5}px;
+                height: ${size * 0.5}px;
+                left: ${e.clientX - rect.left - size * 0.25}px;
+                top: ${e.clientY - rect.top - size * 0.25}px;
+                z-index: 10;
+              `;
+
+              this.style.position = "relative";
+              this.style.overflow = "hidden";
+              this.appendChild(ripple);
+
+              setTimeout(() => ripple.remove(), 600);
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
