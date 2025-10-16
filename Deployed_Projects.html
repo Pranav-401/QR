@@ -699,12 +699,12 @@
         </div>
       </div>
     </div>
-
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const projectCards = document.querySelectorAll(".project-card");
 
         projectCards.forEach((card) => {
+          // Hover effects
           card.addEventListener("mouseenter", function () {
             this.style.transform = "translateY(-4px)";
           });
@@ -713,35 +713,37 @@
             this.style.transform = "translateY(0)";
           });
 
-          // Ripple effect on link clicks
-          const links = this.querySelectorAll(".project-link");
-          links.forEach((link) => {
+          // Ripple effect ONLY for project links (not back button)
+          const projectLinks = card.querySelectorAll(".project-link"); // More specific selector
+          projectLinks.forEach((link) => {
             link.addEventListener("click", function (e) {
-              e.preventDefault();
-              // Add ripple effect
+              // Create ripple effect but DON'T prevent default for actual navigation
               const ripple = document.createElement("div");
               const rect = this.getBoundingClientRect();
               const size = Math.max(rect.width, rect.height);
 
               ripple.style.cssText = `
-                position: absolute;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.4);
-                pointer-events: none;
-                animation: clickRipple 0.6s ease-out;
-                transform: scale(0);
-                width: ${size * 0.5}px;
-                height: ${size * 0.5}px;
-                left: ${e.clientX - rect.left - size * 0.25}px;
-                top: ${e.clientY - rect.top - size * 0.25}px;
-                z-index: 10;
-              `;
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.4);
+                    pointer-events: none;
+                    animation: clickRipple 0.6s ease-out;
+                    transform: scale(0);
+                    width: ${size * 0.5}px;
+                    height: ${size * 0.5}px;
+                    left: ${e.clientX - rect.left - size * 0.25}px;
+                    top: ${e.clientY - rect.top - size * 0.25}px;
+                    z-index: 10;
+                `;
 
               this.style.position = "relative";
               this.style.overflow = "hidden";
               this.appendChild(ripple);
 
               setTimeout(() => ripple.remove(), 600);
+
+              // Remove e.preventDefault() to allow normal link behavior
+              // The link will navigate after the ripple effect
             });
           });
         });
